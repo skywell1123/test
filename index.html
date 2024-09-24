@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학교 현황판</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .responsive-map {
+            position: absolute;
+            border: 2px solid transparent;
+            transition: border 0.2s;
+        }
+
+        .responsive-map:hover {
+            border-color: red;
+            border-radius: 10px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .active-tab {
+            display: block;
+        }
+
+        .modal {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4">
+
+    <!-- 고정된 탭 메뉴 -->
+    <div class="w-full max-w-4xl mx-auto mb-6">
+        <div class="flex justify-around border-b sticky top-0 z-50">
+            <button class="py-2 px-4 text-gray-600 hover:text-blue-600" onclick="openTab(event, 'floor1')">1층</button>
+            <button class="py-2 px-4 text-gray-600 hover:text-blue-600" onclick="openTab(event, 'floor2')">2층</button>
+            <!-- 필요 시 다른 층 추가 -->
+        </div>
+    </div>
+
+    <!-- 1층 콘텐츠 -->
+    <div id="floor1" class="tab-content active-tab relative w-full max-w-4xl mx-auto">
+        <img src="f1.png" alt="1층 이미지" class="w-full h-auto">
+
+        <!-- 첫 번째 클릭 영역 -->
+        <div class="responsive-map"
+            style="top: 5.5%; left: 44%; width: 20%; height: 31%; border-radius: 10px;"
+            onclick="openModal('modal1')"></div>
+        
+        <!-- 두 번째 클릭 영역 -->
+        <div class="responsive-map"
+            style="top: 64%; left: 44%; width: 40%; height: 31%; border-radius: 10px;"
+            onclick="openModal('modal2')"></div>
+    </div>
+
+    <!-- 2층 콘텐츠 -->
+    <div id="floor2" class="tab-content relative w-full max-w-4xl mx-auto">
+        <img src="f2.png" alt="2층 이미지" class="w-full h-auto">
+        
+        <!-- 예시 클릭 영역 -->
+        <div class="responsive-map cursor-pointer"
+            style="top: 5%; left: 50%; width: 40%; height: 20%; border-radius: 10px;"
+            onclick="openModal('modal3')"></div>
+    </div>
+
+    <!-- 모달 1 -->
+    <div id="modal1" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-xl font-bold mb-4">창조아트홀</h2>
+            <a href="#" onclick="closeModal('modal1')">
+            <img src="s1.png" alt="Interactive Image" class="w-full h-auto" >
+            </a>
+        </div>
+    </div>
+
+    <!-- 모달 2 -->
+    <div id="modal2" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-xl font-bold mb-4">창조아트리움</h2>
+            <a href="#" onclick="closeModal('modal2')">
+            <img src="s2.png" alt="Interactive Image" class="w-full h-auto" >
+            </a>
+        </div>
+    </div>
+
+    <!-- 모달 3 (2층 예시) -->
+    <div id="modal3" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-xl font-bold mb-4">2층 예시 모달</h2>
+            <a href="#" onclick="closeModal('modal3')">
+            <img src="s1.png" alt="2층 Interactive Image" class="w-full h-auto" >
+            </a>
+        </div>
+    </div>
+
+    <!-- JavaScript to handle tab switching and modal opening/closing -->
+    <script>
+        function openTab(event, tabId) {
+            // 모든 탭 내용 숨기기
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active-tab'));
+
+            // 클릭된 탭의 내용만 표시
+            document.getElementById(tabId).classList.add('active-tab');
+
+            // 모든 탭 버튼의 활성화 상태 초기화
+            const tabButtons = document.querySelectorAll('button');
+            tabButtons.forEach(button => button.classList.remove('text-blue-500'));
+
+            // 현재 클릭된 탭 버튼에 활성화 상태 추가
+            event.currentTarget.classList.add('text-blue-500');
+        }
+
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('show');
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('show');
+        }
+    </script>
+
+</body>
+</html>
